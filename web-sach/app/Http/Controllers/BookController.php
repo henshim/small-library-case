@@ -28,16 +28,29 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $path = $request->file('img')->store('images', 'public');
-        $name = $request->name;
-        $price = $request->price;
-        $cate = $request->cate;
-        $author = $request->author;
-        $description = $request->description;
-        $insert = ['description' => $description, 'img' => $path, 'name' => $name, 'price' => $price, 'cate_id' => $cate, 'author_id' => $author];
-        Book::query()->insert($insert);
-        toastr()->success('Add success new book');
-        return redirect()->route('book.list');
+        if ($request->hasFile('img')) {
+            $path = $request->file('img')->store('images', 'public');
+            $name = $request->name;
+            $price = $request->price;
+            $cate = $request->cate;
+            $author = $request->author;
+            $description = $request->description;
+            $insert = ['description' => $description, 'img' => $path, 'name' => $name, 'price' => $price, 'cate_id' => $cate, 'author_id' => $author];
+            Book::query()->insert($insert);
+            toastr()->success('Add success new book');
+            return redirect()->route('book.list');
+        } else {
+            $name = $request->name;
+            $price = $request->price;
+            $cate = $request->cate;
+            $author = $request->author;
+            $description = $request->description;
+            $insert = ['description' => $description, 'name' => $name, 'price' => $price, 'cate_id' => $cate, 'author_id' => $author];
+            Book::query()->insert($insert);
+            toastr()->success('Add success new book');
+            return redirect()->route('book.list');
+
+        }
     }
 
     public function update($id)
