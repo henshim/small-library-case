@@ -15,3 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[BookController::class,'index'])->name('book.list');
+
+Route::prefix('book/')->group(function (){
+    Route::get('add',[BookController::class,'add'])->name('book.add');
+
+    Route::post('store',[BookController::class,'store'])->name('book.store');
+
+    Route::get('update/{id}',[BookController::class,'update'])->name('book.update');
+
+    Route::post('edit',[BookController::class,'edit'])->name('book.edit');
+
+
+});
